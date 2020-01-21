@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Interfaccia {
 
-    public void start(){
+    public void startAgenti(){
         Scanner input = new Scanner(System.in);
         int scelta1 = input.nextInt();
         int intidimpiegati = 0;
