@@ -31,13 +31,13 @@ public class InterfacciaUtente {
         while (scelta1 != 9) {
             System.out.println("Scegli cosa vuoi fare:");
             System.out.println("1. Inserisci un nuovo impiegato");
-            System.out.println("2. Elimina un impiegato");
-            System.out.println("3. Modifica un impiegato");
+            System.out.println("2. Modifica un impiegato");
+            System.out.println("3. Elimina un impiegato");
             System.out.println("4. Visualizza tutti gli impiegati");
             System.out.println("");
             System.out.println("5. Inserisci un nuovo corso");
-            System.out.println("6. Elimina un corso");
-            System.out.println("7. Modifica un corso");
+            System.out.println("6. Modifica un corso");
+            System.out.println("7. Elimina un corso");
             System.out.println("8. Visualizza tutti i corso");
             System.out.println("");
             System.out.println("9. Esci");
