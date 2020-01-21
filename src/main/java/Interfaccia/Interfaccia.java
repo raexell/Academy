@@ -1,5 +1,7 @@
 package Interfaccia;
 
+import Agenti.Agenti;
+
 import java.util.Scanner;
 
 public class Interfaccia {
@@ -26,13 +28,14 @@ public class Interfaccia {
             switch (scelta1){
                 case 1 :
                     System.out.print("");
-                    String id = input.nextLine();
+                    int id = input.nextInt();
                     System.out.print("");
                     String nome = input.nextLine();
                     System.out.print("");
                     String cognome = input.nextLine();
                     System.out.print("");
                     String sex = input.nextLine();
+                    Agenti a1 = new Agenti(id,nome,cognome,sex);
             }
 
 
