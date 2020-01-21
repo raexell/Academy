@@ -36,6 +36,8 @@ public class DatabaseInMemoria {
         Corsi c3 = new Corsi(3,"Inglese per nabbi","Easy",753,320);
         Corsi c4 = new Corsi(4,"Fisica per nabbi","Hard",123,240);
         Corsi c5 = new Corsi(5,"Chimica per nabbi","Medium",300,240);
+
+
     }
 
     public Map<Integer, Agenti> getAgenti() {

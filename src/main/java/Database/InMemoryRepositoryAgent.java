@@ -6,14 +6,15 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InMemoryRepositoryAgent implements RepositoryPersonale {
+public class InMemoryRepositoryAgent implements AgentRepository {
     private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
     @Override
     public Agenti create(Agenti toInsert) {
         Map<Integer,Agenti> agents = data.getAgenti();
+        int maxKey = agents.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
+        toInsert.setId(++maxKey);
         agents.put(toInsert.getId(),toInsert);
         return toInsert;
-
     }
 
     @Override
@@ -42,5 +43,10 @@ public class InMemoryRepositoryAgent implements RepositoryPersonale {
                 .values().stream()
                 .filter(a -> a.getLastname().contains(pattern))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Agenti getAgentiById(int id) {
+        return data.getAgenti().get(id);
     }
 }

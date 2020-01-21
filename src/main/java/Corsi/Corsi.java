@@ -54,4 +54,15 @@ public class Corsi {
     public void setNumHours(int numHours) {
         this.numHours = numHours;
     }
+
+    @Override
+    public String toString() {
+        return "Corsi{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", cost=" + cost +
+                ", numHours=" + numHours +
+                '}';
+    }
 }

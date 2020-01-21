@@ -44,4 +44,16 @@ public class Agenti {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public Agenti(){}
+
+    @Override
+    public String toString() {
+        return "Agenti{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }

@@ -5,7 +5,7 @@ import Corsi.Corsi;
 import java.util.Collection;
 import java.util.Map;
 
-public class InMemoryRepositoryCorsi implements RepositoryCorsi {
+public class InMemoryRepositoryCorsi implements CourseRepository {
     private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
     @Override
     public Corsi create(Corsi toInsert) {
@@ -37,5 +37,10 @@ public class InMemoryRepositoryCorsi implements RepositoryCorsi {
     @Override
     public Collection<Corsi> getByLastNameLike(String pattern) {
         return null;
+    }
+
+    @Override
+    public Corsi getCorsiById(int id) {
+        return data.getCorsi().get(id);
     }
 }
