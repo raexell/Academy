@@ -47,7 +47,8 @@ public class Interfaccia {
                     imra.delete(id);
                 case 3:
                     System.out.print("");
-                    id
+                    id = input.nextInt();
+
             }
 
 
