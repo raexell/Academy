@@ -1,3 +1,7 @@
+package Database;
+
+import Agenti.Agenti;
+
 import java.util.Collection;
 
 public interface RepositoryPersonale {

@@ -1,3 +1,7 @@
+package Database;
+
+import Agenti.Agenti;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;

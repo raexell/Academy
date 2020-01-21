@@ -1,3 +1,7 @@
+package Database;
+
+import Corsi.Corsi;
+
 import java.util.Collection;
 
 public interface RepositoryCorsi{

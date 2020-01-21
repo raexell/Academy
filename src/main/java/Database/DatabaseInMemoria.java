@@ -1,9 +1,14 @@
+package Database;
+
+import Agenti.Agenti;
+import Corsi.Corsi;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseInMemoria {
-    private Map<Integer,Agenti> agenti = new HashMap<>();
-    private   Map<Integer,Corsi> corsi = new HashMap<>();
+    private Map<Integer, Agenti> agenti = new HashMap<>();
+    private   Map<Integer, Corsi> corsi = new HashMap<>();
     private static DatabaseInMemoria instance = new DatabaseInMemoria();
 
     public static DatabaseInMemoria getInstance(){

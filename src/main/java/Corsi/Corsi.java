@@ -1,3 +1,5 @@
+package Corsi;
+
 public class Corsi {
     private int id;
     private String title;
