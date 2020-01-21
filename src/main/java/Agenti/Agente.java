@@ -1,12 +1,12 @@
 package Agenti;
 
-public class Agenti {
+public class Agente {
     private int id;
     private String firstname;
     private String lastname;
     private String sex;
 
-    public Agenti(int id, String firstname, String lastname, String sex) {
+    public Agente(int id, String firstname, String lastname, String sex) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -45,7 +45,7 @@ public class Agenti {
         this.sex = sex;
     }
 
-    public Agenti(){}
+    public Agente(){}
 
     @Override
     public String toString() {

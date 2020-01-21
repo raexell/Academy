@@ -1,14 +1,14 @@
 package Database;
 
-import Agenti.Agenti;
+import Agenti.Agente;
 
 import java.util.Collection;
 
 public interface AgentRepository {
-    Agenti create(Agenti toInsert);
+    Agente create(Agente toInsert);
     boolean delete(int agentID);
-    boolean update(int agentID, Agenti toUpdate);
-    Collection<Agenti> getAll();
-    Collection<Agenti> getByLastNameLike(String pattern);
-    Agenti getAgentiById(int id);
+    boolean update(int agentID, Agente toUpdate);
+    Collection<Agente> getAll();
+    Collection<Agente> getByLastNameLike(String pattern);
+    Agente getAgentiById(int id);
 }
