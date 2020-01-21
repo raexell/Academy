@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Scanner;
 
 import static java.lang.System.out;
+import static java.lang.System.setOut;
 
 public class InterfacciaUtente {
 
@@ -174,7 +175,7 @@ public class InterfacciaUtente {
                     }else {
                         System.out.println("L'agente eliminato");
                     }
-
+                    break;
                 case 8:
                     out.println("Ecco la lista dei corsi");
                     out.println();
@@ -182,6 +183,10 @@ public class InterfacciaUtente {
                     // cc.forEach(c -> System.out.println(c));
                     cc.forEach(System.out::println);
 
+                    break;
+                case 9:
+                    out.println("Grazie per aver partecipato");;
+                    break;
                     default:
                     System.out.println("inserisci un numero tra 0 e 9");
                     break;
