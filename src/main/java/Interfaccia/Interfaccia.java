@@ -1,6 +1,7 @@
 package Interfaccia;
 
 import Agenti.Agenti;
+import Database.InMemoryRepositoryAgent;
 
 import java.util.Scanner;
 
@@ -9,8 +10,11 @@ public class Interfaccia {
     public void startAgenti(){
         Scanner input = new Scanner(System.in);
         int scelta1 = input.nextInt();
-        int intidimpiegati = 0;
-
+        InMemoryRepositoryAgent imra = new InMemoryRepositoryAgent();
+        int id;
+        String nome;
+        String cognome;
+        String sex;
         while (scelta1 != 9) {
             System.out.println("Scegli cosa vuoi fare:");
             System.out.println("1. Inserisci un nuovo impiegato");
@@ -28,14 +32,22 @@ public class Interfaccia {
             switch (scelta1){
                 case 1 :
                     System.out.print("");
-                    int id = input.nextInt();
+                    id = input.nextInt();
                     System.out.print("");
-                    String nome = input.nextLine();
+                    nome = input.nextLine();
                     System.out.print("");
-                    String cognome = input.nextLine();
+                    cognome = input.nextLine();
                     System.out.print("");
-                    String sex = input.nextLine();
-                    Agenti a1 = new Agenti(id,nome,cognome,sex);
+                    sex = input.nextLine();
+                    Agenti a = new Agenti(id,nome,cognome,sex);
+                    imra.create(a);
+                case 2:
+                    System.out.print("");
+                    id = input.nextInt();
+                    imra.delete(id);
+                case 3:
+                    System.out.print("");
+                    id
             }
 
 
