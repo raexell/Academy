@@ -1,18 +1,22 @@
 package Corsi;
 
-public class Corsi {
+public class Corso {
     private int id;
     private String title;
     private String description;
     private double cost;
     private int numHours;
 
-    public Corsi(int id,String title,String description,double cost,int numHours){
+    public Corso(int id, String title, String description, double cost, int numHours){
         this.id = id;
         this.title = title;
         this.description = description;
         this.cost = cost;
         this.numHours = numHours;
+    }
+
+    public Corso() {
+
     }
 
     public int getId() {
@@ -53,5 +57,16 @@ public class Corsi {
 
     public void setNumHours(int numHours) {
         this.numHours = numHours;
+    }
+
+    @Override
+    public String toString() {
+        return "Corso{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", cost=" + cost +
+                ", numHours=" + numHours +
+                '}';
     }
 }
