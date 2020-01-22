@@ -2,12 +2,22 @@ package Database;
 
 import Agenti.Agente;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryRepositoryAgent implements AgentRepository {
     private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
+   /* private File agentRepo = new File(
+            getClass().getClassLoader().getResource("database.properties").getFile()
+    );*/
+
+
     @Override
     public Agente create(Agente toInsert) {
         Map<Integer, Agente> agents = data.getAgenti();
@@ -31,7 +41,7 @@ public class InMemoryRepositoryAgent implements AgentRepository {
         return old != null;
     }
 
-    @Override
+   @Override
     public Collection<Agente> getAll() {
         Map<Integer, Agente> agents = data.getAgenti();
         return agents.values();
@@ -49,4 +59,12 @@ public class InMemoryRepositoryAgent implements AgentRepository {
     public Agente getAgentiById(int id) {
         return data.getAgenti().get(id);
     }
+
+
+
+
+
+
+
+
 }

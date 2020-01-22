@@ -3,18 +3,28 @@ package Database;
 import Agenti.Agente;
 import Corsi.Corso;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseInMemoria {
-    private Map<Integer, Agente> agenti = new HashMap<>();
-    private   Map<Integer, Corso> corsi = new HashMap<>();
     private static DatabaseInMemoria instance = new DatabaseInMemoria();
+    private DatabaseInFile dbf = new DatabaseInFile();
+
+    private Map<Integer, Agente> agenti = dbf.parseFile();
+    private   Map<Integer, Corso> corsi = new HashMap<>();
 
     public static DatabaseInMemoria getInstance(){
         return instance;
     }
-    private DatabaseInMemoria(){
+
+
+
+    private DatabaseInMemoria() {
+        /*
         Agente a1 = new Agente(1,"Tim","Barner-Lee","M");
         Agente a2 = new Agente(2,"Theodore","Kaczynski","M");
         Agente a3 = new Agente(3,"Mark","Zuckerberg","M");
@@ -41,8 +51,11 @@ public class DatabaseInMemoria {
         corsi.put(c2.getId(),c2);
         corsi.put(c3.getId(),c3);
         corsi.put(c4.getId(),c4);
-        corsi.put(c5.getId(),c5);
+        corsi.put(c5.getId(),c5);*/
+
+
     }
+
 
     public Map<Integer, Agente> getAgenti() {
         return agenti;
@@ -51,4 +64,6 @@ public class DatabaseInMemoria {
     public Map<Integer, Corso> getCorsi() {
         return corsi;
     }
+
+
 }
