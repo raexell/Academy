@@ -10,70 +10,49 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class DatabaseInFile {
-    //private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
+public class DatabaseInFile implements Database{
+    private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
     private File agentRepo = new File(
-            getClass().getClassLoader().getResource("database.properties").getFile()
+            getClass().getClassLoader().getResource("database.csv").getFile()
     );
-    private Map<Integer, Agente> agentMap = new HashMap<>();
+   // private Map<Integer, Agente> agentMap = new HashMap<>();
 
-    public Map<Integer, Agente> parseFile() {
+    private static DatabaseInFile instance= new DatabaseInFile();
 
-        if (agentRepo == null) return null;
+    public static DatabaseInFile getInstance(){
+        return instance;
+    }
 
-        try {FileReader reader = new FileReader(agentRepo);
+    private DatabaseInFile(){
+        loadData();
+    }
 
-             BufferedReader br = new BufferedReader(reader);
+    @Override
+    public void loadData() {
 
+        if (agentRepo == null) return ;
+        //agentMap.clear();
+        Map<Integer, Agente> agents= new HashMap<>();
+        try {
+            FileReader reader = new FileReader(agentRepo);
+            BufferedReader br = new BufferedReader(reader);
             String line;
-            String agentId="";
-            String agentNome="";
-            String agentCognome="";
-            String agentSesso="";
-
             while ((line = br.readLine()) != null) {
                 String[] parsed= line.split(",");
-                for(int i=0; i<parsed.length;i++){
-                    switch(i){
-                        case 0:
-                            agentId=parsed[i];
-                            break;
-                        case 1:
-                            agentNome=parsed[i];
-                            break;
-                        case 2:
-                            agentCognome=parsed[i];
-                            break;
-                        case 3:
-                            agentSesso=parsed[i];
-                            break;
-
-                    }
-                    Agente a = new Agente(Integer.parseInt(agentId),agentNome,agentCognome,agentSesso);
-                    agentMap.put(a.getId(),a);
+                Agente a = new Agente(Integer.parseInt(parsed[0]),parsed[1],parsed[2],parsed[3]);
+                agents.put(a.getId(),a);
                 }
-            }
+            //}
+            data.setAgenti(agents);
         }catch (IOException e){
-
+            e.printStackTrace();
         }
-        return agentMap;
+
     }
 
-    public File getRepo(){
-        return this.agentRepo;
-    }
-
-    public void printFile(File file) throws IOException {
-        if (file == null) return;
-
-        try (FileReader reader = new FileReader(file);
-             BufferedReader br = new BufferedReader(reader)) {
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        }
+    @Override
+    public Map<Integer, Agente> getAgentMap(){
+        return data.getAgentMap();
     }
 
 }

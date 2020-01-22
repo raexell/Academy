@@ -10,21 +10,39 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DatabaseInMemoria {
+public class DatabaseInMemoria implements Database {
     private static DatabaseInMemoria instance = new DatabaseInMemoria();
-    private DatabaseInFile dbf = new DatabaseInFile();
+   // private DatabaseInFile dbf = new DatabaseInFile();
 
-    private Map<Integer, Agente> agenti = dbf.parseFile();
+    //private Map<Integer, Agente> agenti = dbf.parseFile();
+    private Map<Integer, Agente> agenti = new HashMap<>();
     private   Map<Integer, Corso> corsi = new HashMap<>();
 
     public static DatabaseInMemoria getInstance(){
         return instance;
     }
+    private DatabaseInMemoria(){
+        loadData();
+    }
 
+    @Override
+    public Map<Integer, Agente> getAgentMap() {
+        return agenti;
+    }
 
+    public Map<Integer, Corso> getCorsi() {
+        return corsi;
+    }
 
-    private DatabaseInMemoria() {
-        /*
+    public void setAgenti(Map<Integer, Agente> agenti) {
+        this.agenti = agenti;
+    }
+
+    public void setCorsi(Map<Integer, Corso> corsi) {
+        this.corsi = corsi;
+    }
+
+    public void loadData(){
         Agente a1 = new Agente(1,"Tim","Barner-Lee","M");
         Agente a2 = new Agente(2,"Theodore","Kaczynski","M");
         Agente a3 = new Agente(3,"Mark","Zuckerberg","M");
@@ -51,19 +69,9 @@ public class DatabaseInMemoria {
         corsi.put(c2.getId(),c2);
         corsi.put(c3.getId(),c3);
         corsi.put(c4.getId(),c4);
-        corsi.put(c5.getId(),c5);*/
+        corsi.put(c5.getId(),c5);
 
 
     }
-
-
-    public Map<Integer, Agente> getAgenti() {
-        return agenti;
-    }
-
-    public Map<Integer, Corso> getCorsi() {
-        return corsi;
-    }
-
 
 }
