@@ -2,11 +2,13 @@ package Database;
 
 import Corsi.Corso;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
 public class InMemoryRepositoryCorsi implements CourseRepository {
     private DatabaseInMemoria data = DatabaseInMemoria.getInstance();
+    private File fileAgenti = new File("agenti.txt");
     @Override
     public Corso create(Corso toInsert) {
         Map<Integer, Corso> corsi = data.getCorsi();

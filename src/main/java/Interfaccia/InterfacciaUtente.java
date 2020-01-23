@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Scanner;
 
 import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 public class InterfacciaUtente {
 
