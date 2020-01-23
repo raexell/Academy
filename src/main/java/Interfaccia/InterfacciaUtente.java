@@ -2,10 +2,7 @@ package Interfaccia;
 
 import Agenti.Agente;
 import Corsi.Corso;
-import Database.AgentRepository;
-import Database.CourseRepository;
-import Database.InMemoryRepositoryAgent;
-import Database.InMemoryRepositoryCorsi;
+import Database.*;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -14,9 +11,16 @@ import static java.lang.System.out;
 
 public class InterfacciaUtente {
 
-    private AgentRepository agentRepo = new InMemoryRepositoryAgent();
-    private CourseRepository courses = new InMemoryRepositoryCorsi();
+   // private AgentRepository agentRepo = new InMemoryRepositoryAgent();
+   private AgentRepository agentRepository;
+    private CourseRepository courseRepository;
     private Scanner input = new Scanner(System.in);
+
+    public InterfacciaUtente(AgentRepository agentRepository , CourseRepository courseRepository){
+        this.agentRepository = agentRepository;
+        this.courseRepository = courseRepository;
+    }
+
     public void start(){
 
         int scelta1 = 0;
@@ -55,17 +59,17 @@ public class InterfacciaUtente {
                     System.out.print("sesso");
                     sex = input.nextLine();
                     a = new Agente(0,nome,cognome,sex);
-                    agentRepo.create(a);
-                    ca = agentRepo.getAll();
+                    agentRepository.create(a);
+                    ca = agentRepository.getAll();
                     ca.forEach(System.out::println);
                     break;
                 case 2:
-                    ca = agentRepo.getAll();
+                    ca = agentRepository.getAll();
                     ca.forEach(System.out::println);
                     System.out.print("Inserisci ID dell'agente che vuoi modificare: ");
                     currentID = input.nextInt();
                     input.nextLine();
-                    Agente found = agentRepo.getAgentiById(currentID);
+                    Agente found = agentRepository.getAgentiById(currentID);
                     if(found == null){
                         System.out.println("L'agente con questo ID non esiste.");
                         break;
@@ -85,17 +89,17 @@ public class InterfacciaUtente {
                     String newsex = input.nextLine();
                     newagente.setSex(!newsex.isEmpty() ? newsex : found.getSex());
 
-                    agentRepo.update(currentID, newagente);
+                    agentRepository.update(currentID, newagente);
                     break;
 
                 case 3:
-                    ca = agentRepo.getAll();
+                    ca = agentRepository.getAll();
                     ca.forEach(System.out::println);
                     System.out.print("Inserisci ID dell'agente che vuoi eliminare: ");
                     currentID = input.nextInt();
                     input.nextLine();
 
-                    boolean wasDeleted = agentRepo.delete(currentID);
+                    boolean wasDeleted = agentRepository.delete(currentID);
                     if(!wasDeleted) {
                         System.out.println("L'agente con questo ID non esiste.");
                     }else {
@@ -104,9 +108,9 @@ public class InterfacciaUtente {
 
                     break;
                 case 4:
-                    System.out.println("Ecco la lista dei corsi");
+                    System.out.println("Ecco la lista degli impiegati");
                     System.out.println();
-                    ca = agentRepo.getAll();
+                    ca = agentRepository.getAll();
                     // cc.forEach(c -> System.out.println(c));
                     ca.forEach(System.out::println);
                     break;
@@ -122,19 +126,19 @@ public class InterfacciaUtente {
                     double costo = input.nextDouble();
                     //input.next();
                     Corso nuovocorso = new Corso(0, titoloCorso, descrizioneCorso, costo, durataOre);
-                    courses.create(nuovocorso);
-                    cc = courses.getAll();
+                    courseRepository.create(nuovocorso);
+                    cc = courseRepository.getAll();
                     cc.forEach(System.out::println);
                     break;
 
                 case 6:
                     out.println("testetestets");
-                    cc = courses.getAll();
+                    cc = courseRepository.getAll();
                     cc.forEach(System.out::println);
                     out.print("Inserisci ID del corso che vuoi modificare: ");
                     currentID = input.nextInt();
                     input.nextLine();
-                    Corso foundcorso = courses.findByID(currentID);
+                    Corso foundcorso = courseRepository.findByID(currentID);
                     if(foundcorso == null){
                         out.println("Il corso con questo ID non esiste.");
                         break;
@@ -158,17 +162,17 @@ public class InterfacciaUtente {
                     out.println("Inserisci numero ore o 0 per lasciare invariato:");
                     int newdurataore = input.nextInt();
                     newcorso.setTitle(!newtitle.isEmpty()? newtitle : foundcorso.getTitle());
-                    courses.update(currentID, newcorso);
+                    courseRepository.update(currentID, newcorso);
                     break;
 
                 case 7:
-                    cc = courses.getAll();
+                    cc = courseRepository.getAll();
                     cc.forEach(System.out::println);
                     out.print("Inserisci ID del corso che vuoi eliminare: ");
                     currentID = input.nextInt();
                     input.nextLine();
 
-                    boolean wasDeletedCourse = courses.delete(currentID);
+                    boolean wasDeletedCourse = courseRepository.delete(currentID);
                     if(!wasDeletedCourse){
                         System.out.println("L'agente con questo ID non esiste.");
                     }else {
@@ -178,7 +182,7 @@ public class InterfacciaUtente {
                 case 8:
                     out.println("Ecco la lista dei corsi");
                     out.println();
-                    cc = courses.getAll();
+                    cc = courseRepository.getAll();
                     // cc.forEach(c -> System.out.println(c));
                     cc.forEach(System.out::println);
 
