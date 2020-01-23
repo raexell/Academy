@@ -4,111 +4,119 @@ import Agenti.Agente;
 import Corsi.Corso;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class JdbcCourseRepository implements CourseRepository {
+    public static final String insQuery = "insert into course(title, description, cost, numHours) values (?, ?, ?, ?)";
+    public static final String delQuery = "delete from course where id = ?";
+    public static final String updateQuery = "update course set title = ?, description = ?, cost = ?, numHours = ? where id = ?";
+    public static final String ALL_COURSE= "SELECT id, title, description, cost, numHours FROM course";
+    public static final String SRC_BY_NAME= ALL_COURSE+" WHERE title= ?";
+    public static final String SRC_BY_ID= ALL_COURSE+" WHERE id= ?";
+    private Connection con;
 
-    private Map<Integer, Corso> corsi = new HashMap<>();
+    public JdbcCourseRepository(Connection con){
+        this.con=con;
+    }
 
     @Override
-    public Corso create(Corso toInsert) {
-        final String insQuery = "insert into course(title, description, cost, numHours) values (?, ?, ?, ?)";
-        try(Connection con = ConnectionFactory.createConnection();
-            PreparedStatement st = con.prepareStatement(insQuery)){
+    public Corso create(Corso toInsert) throws DataExeption {
+        try(PreparedStatement st = con.prepareStatement(insQuery,Statement.RETURN_GENERATED_KEYS)){
             st.setString(1, toInsert.getTitle());
             st.setString(2, toInsert.getDescription());
             st.setDouble(3, toInsert.getCost());
             st.setInt(4, toInsert.getNumHours());
-           st.executeUpdate();
-           return toInsert;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-    @Override
-    public boolean delete(int corsiID) {
-        final String delQuery = "delete from course where id = ?";
-        try(Connection con = ConnectionFactory.createConnection();
-            PreparedStatement st = con.prepareStatement(delQuery)){
-            st.setInt(1, corsiID);
             st.executeUpdate();
-            return true;
-            } catch (SQLException e) {
-            e.printStackTrace();
+            ResultSet generatedKeys = st.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                toInsert.setId(generatedKeys.getInt(1));
+            }
+            return toInsert;
+        } catch (SQLException e) {
+            DataExeption ex = new DataExeption("Errore nella create del corso", e );
+            throw ex;
         }
-        return false;
     }
 
     @Override
-    public boolean update(int corsiID, Corso toUpdate) {
-        final String updateQuery = "update course set title = ?, description = ?, cost = ?, numHours = ? where id = ?";
+    public boolean delete(int corsiID) throws DataExeption {
+        try(PreparedStatement st = con.prepareStatement(delQuery)){
+            st.setInt(1, corsiID);
+            int rows = st.executeUpdate();
+            return rows!=0;
+            } catch (SQLException e) {
+            DataExeption ex = new DataExeption("Errore nella cancellazione del corso", e );
+            throw ex;
+        }
+    }
 
-        try(Connection con = ConnectionFactory.createConnection();
-            PreparedStatement st = con.prepareStatement(updateQuery)){
+    @Override
+    public boolean update(int corsiID, Corso toUpdate) throws DataExeption {
+        try(PreparedStatement st = con.prepareStatement(updateQuery)){
             st.setString(1, toUpdate.getTitle());
             st.setString(2, toUpdate.getDescription());
             st.setDouble(3, toUpdate.getCost());
             st.setInt(4, toUpdate.getNumHours());
             st.setInt(5, corsiID);
-            st.executeUpdate();
-            return true;
+            int rows = st.executeUpdate();
+            return rows!=0;
             }
-        catch (
-                SQLException e) {
-            e.printStackTrace();
+        catch (SQLException e) {
+            DataExeption ex = new DataExeption("Errore nell'update del corso", e );
+            throw ex;
         }
-        return false;
     }
 
     @Override
-    public Collection<Corso> getAll() {
-        final String ALL_COURSE= "SELECT id, title, description, cost, numHours FROM course";
-
-        try(Connection con = ConnectionFactory.createConnection();
-            Statement st =con.createStatement()) {
+    public Collection<Corso> getAll() throws DataExeption {
+        try(Statement st =con.createStatement()) {
             ResultSet rs = st.executeQuery(ALL_COURSE);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String title = rs.getString("title");
-                String desc = rs.getString("description");
-                double cost = rs.getDouble("cost");
-                int numHours = rs.getInt("numHours");
-                Corso c = new Corso(id, title, desc, cost, numHours);
-                corsi.put(c.getId(), c);
-            }
-            return corsi.values();
-        }catch (
-                SQLException e) {
-            e.printStackTrace();
+            return readResult(rs);
+        }catch (SQLException e) {
+            DataExeption ex = new DataExeption("Errore nella ricerca corsi", e );
+            throw ex;
         }
-        return null;
     }
 
     @Override
-    public Collection<Corso> getByLastNameLike(String pattern) {
-        try(Connection con = ConnectionFactory.createConnection()){
-        } catch (
-                SQLException e) {
-            e.printStackTrace();
+    public Collection<Corso> getByLastNameLike(String pattern) throws DataExeption {
+        try (PreparedStatement st = con.prepareStatement(SRC_BY_NAME)) {
+            st.setString(1, "%" + pattern + "%");
+            ResultSet rs = st.executeQuery();
+            return readResult(rs);
+        } catch ( SQLException e) {
+            DataExeption ex = new DataExeption("Errore nella ricerca LIKE su lastname", e );
+            throw ex;
         }
-        return null;
     }
 
     @Override
-    public Corso findByID(int id) {
-        try(Connection con = ConnectionFactory.createConnection()){
-        } catch (
-                SQLException e) {
-            e.printStackTrace();
+    public Corso findByID(int id) throws DataExeption {
+        try(PreparedStatement st = con.prepareStatement(SRC_BY_ID)){
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            List<Corso> res=readResult(rs);
+            if(res.isEmpty())
+                return null;
+            else
+                return res.get(0);
+        } catch (SQLException e) {
+            DataExeption ex = new DataExeption("Errore nella ricerca del corso per ID", e );
+            throw ex;
         }
+    }
 
-        return null;
+    private List<Corso> readResult(ResultSet rs) throws SQLException{
+        List<Corso> corsi = new ArrayList<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String title = rs.getString("title");
+            String desc = rs.getString("description");
+            double cost = rs.getDouble("cost");
+            int numHours = rs.getInt("numHours");
+            Corso c = new Corso(id, title, desc, cost, numHours);
+            corsi.add(c);
+        }
+        return corsi;
     }
 }

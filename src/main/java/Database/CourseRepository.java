@@ -6,10 +6,10 @@ import java.util.Collection;
 
 public interface CourseRepository {
 
-    Corso create(Corso toInsert);
-    boolean delete(int corsiID);
-    boolean update(int corsiID, Corso toUpdate);
-    Collection<Corso> getAll();
-    Collection<Corso> getByLastNameLike(String pattern);
-    Corso findByID(int id);
+    Corso create(Corso toInsert)  throws DataExeption;
+    boolean delete(int corsiID) throws DataExeption;
+    boolean update(int corsiID, Corso toUpdate) throws DataExeption;
+    Collection<Corso> getAll() throws DataExeption;
+    Collection<Corso> getByLastNameLike(String pattern) throws DataExeption;
+    Corso findByID(int id) throws DataExeption;
 }

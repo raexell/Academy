@@ -7,9 +7,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractMapAgentRepository implements AgentRepository{
-    private Database data= loadDatabase();
 
-    public abstract Database loadDatabase();
+    private Database data;
+
+    public abstract Database loadDatabase() throws DataExeption;
+
+    public AbstractMapAgentRepository() throws DataExeption {
+        this.data = loadDatabase();
+    }
 
     @Override
     public Agente create(Agente toInsert) {
