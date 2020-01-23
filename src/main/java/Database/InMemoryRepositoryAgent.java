@@ -20,15 +20,4 @@ public class InMemoryRepositoryAgent extends AbstractMapAgentRepository {
    /* private File agentRepo = new File(
             getClass().getClassLoader().getResource("database.properties").getFile()
     );*/
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -17,10 +17,7 @@ public class Main {
 
         InterfacciaUtente i = new InterfacciaUtente(new FileRepositoryAgent(),
                 new InMemoryRepositoryCorsi());
-
-
         i.start();
-
     }
 
 }
