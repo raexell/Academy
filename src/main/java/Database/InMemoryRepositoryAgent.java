@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 public class InMemoryRepositoryAgent extends AbstractMapAgentRepository {
 
+    public InMemoryRepositoryAgent() throws DataExeption {
+    }
+
     @Override
     public Database loadDatabase() {
         return DatabaseInMemoria.getInstance();
