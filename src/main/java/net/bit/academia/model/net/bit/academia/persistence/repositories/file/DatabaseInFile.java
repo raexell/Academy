@@ -19,18 +19,21 @@ public class DatabaseInFile implements Database {
     );
    // private Map<Integer, Agent> agentMap = new HashMap<>();
 
-    private static DatabaseInFile instance= new DatabaseInFile();
+    private static DatabaseInFile instance;
 
-    public static DatabaseInFile getInstance(){
+    public static DatabaseInFile getInstance() throws DataExeption {
+        if(instance==null){
+            instance=new DatabaseInFile();
+        }
         return instance;
     }
 
-    private DatabaseInFile(){
+    private DatabaseInFile() throws DataExeption {
         loadData();
     }
 
     @Override
-    public void loadData() {
+    public void loadData() throws DataExeption {
 
         if (agentRepo == null) return ;
         //agentMap.clear();
@@ -47,7 +50,8 @@ public class DatabaseInFile implements Database {
             //}
             data.setAgenti(agents);
         }catch (IOException e){
-            e.printStackTrace();
+            DataExeption ex = new DataExeption("Errore nella lettura da file", e );
+            throw ex;
         }
 
     }

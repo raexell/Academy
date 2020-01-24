@@ -5,6 +5,9 @@ import net.bit.academia.model.net.bit.academia.persistence.repositories.abstract
 
 public class InMemoryRepositoryAgent extends AbstractMapAgentRepository {
 
+    public InMemoryRepositoryAgent() throws DataExeption {
+    }
+
     @Override
     public Database loadDatabase() {
         return DatabaseInMemoria.getInstance();

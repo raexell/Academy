@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     public static final String URL = "jdbc:mysql://localhost/academia?serverTimezone=UTC";
-    public static final String USER = "dev";
-    public static final String PASSWORD = "mysqlpassword";
+    public static final String USER = "root";
+    public static final String PASSWORD = "mysql";
     public static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
