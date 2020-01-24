@@ -256,4 +256,14 @@ public class Agent {
     public void setTeachingAssignments(Collection<TeachingAssignment> teachingAssignments) {
         this.teachingAssignments = teachingAssignments;
     }
+
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }

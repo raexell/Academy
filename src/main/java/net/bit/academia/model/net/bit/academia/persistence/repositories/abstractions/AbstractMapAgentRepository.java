@@ -3,6 +3,7 @@ package net.bit.academia.model.net.bit.academia.persistence.repositories.abstrac
 
 
 import net.bit.academia.model.Agent;
+import net.bit.academia.model.net.bit.academia.persistence.repositories.DataExeption;
 
 import java.util.Collection;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractMapAgentRepository implements AgentRepository {
     private Database data= loadDatabase();
 
-    public abstract Database loadDatabase();
+    public abstract Database loadDatabase() throws DataExeption;
 
     @Override
     public Agent create(Agent toInsert) {
